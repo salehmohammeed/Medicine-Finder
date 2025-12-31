@@ -1,0 +1,123 @@
+* {
+    font-family: Cairo, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f6fb;
+}
+
+.dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background: #0d6efd;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.sidebar li.active,
+.sidebar li:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.content {
+    flex: 1;
+    padding: 25px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.btn {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn.primary {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn.edit {
+    background: #ffc107;
+}
+
+.btn.delete {
+    background: #dc3545;
+    color: white;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    background: white;
+    padding: 20px;
+    width: 320px;
+    border-radius: 10px;
+}
+
+.modal-box input,
+.modal-box select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}

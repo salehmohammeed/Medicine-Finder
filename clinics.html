@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العيادات - Medicine Finder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="navbar-brand">Medicine Finder</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="regions.html" class="nav-link">الأحياء</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="loginDropdown" aria-haspopup="true" aria-expanded="false">
+                        تسجيل الدخول
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                        <li>
+                            <a class="dropdown-item" href="pharmacist-login.html">
+                                تسجيل الدخول كصيدلي
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="manager-login.html">
+                                تسجيل الدخول كمدير
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline btn-sm">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 80px 0 60px 0; margin-bottom: 30px;">
+        <div class="container text-center fadeInUp">
+            <div style="font-size: 48px; margin-bottom: 20px;">
+                <i class="fas fa-hospital heartBeat"></i>
+            </div>
+            <h1 class="mb-3">العيادات المجانية</h1>
+            <p class="mb-4" style="font-size: 18px;">اختر العيادة التي تريدها لعرض الأدوية المتوفرة</p>
+        </div>
+    </section>
+
+    <!-- Clinics Grid -->
+    <section class="container mt-5 mb-5" id="clinicsSection">
+        <div class="row">
+            <!-- Clinics will be inserted here -->
+        </div>
+    </section>
+
+    <!-- No Clinics Message -->
+    <section class="container mt-5 mb-5" id="noClinicsSection" style="display: none; ">
+        <div class="card fadeInUp">
+            <div class="card-body text-center">
+                <div style="font-size: 64px; margin-bottom: 20px; color: var(--gray-color);">
+                    <i class="fas fa-hospital"></i>
+                </div>
+                <h3 style="margin-bottom: 15px;">لا توجد عيادات</h3>
+                <p style="color: var(--gray-color); margin-bottom: 20px;">لم نتمكن من العثور على عيادات في هذا الحي</p>
+                <a href="regions.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> اختر حي آخر
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-pills"></i> Medicine Finder</h3>
+                    <p>نظام يساعد المرضى في غزة على معرفة الأدوية المتوفرة مجانًا في العيادات المجانية</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-link"></i> روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="regions.html"><i class="fas fa-map-marked-alt"></i> الأحياء</a></li>
+                        <li><a href="pharmacist-login.html"><i class="fas fa-user-md"></i> الصيدلي</a></li>
+                        <li><a href="manager-login.html"><i class="fas fa-user-shield"></i> المدير</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-phone"></i> تواصل معنا</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> البريد الإلكتروني: contact@medicinefinder.com</li>
+                        <li><i class="fas fa-phone"></i> هاتف: 059-999-9999</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Medicine Finder. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load JSON Data
+        let data = null;
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load data');
+                }
+                data = await response.json();
+                console.log('Data loaded successfully');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('حدث خطأ في تحميل البيانات');
+            }
+        }
+
+        // Load Clinics
+        async function loadClinics() {
+            if (!data) {
+                await loadData();
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const regionId = urlParams.get('region');
+
+            if (!regionId) {
+                alert('الرجاء اختيار حي');
+                window.location.href = 'regions.html';
+                return;
+            }
+
+            const region = data.regions.find(r => r.id === parseInt(regionId));
+            const clinics = data.clinics.filter(c => c.region_id === parseInt(regionId));
+
+            if (!region) {
+                alert('الحي غير موجود');
+                window.location.href = 'regions.html';
+                return;
+            }
+
+            displayClinics(region, clinics);
+        }
+
+        // Display Clinics
+        function displayClinics(region, clinics) {
+            const clinicsSection = document.getElementById('clinicsSection');
+            const noClinicsSection = document.getElementById('noClinicsSection');
+            const clinicsContainer = clinicsSection.querySelector('.row');
+
+            clinicsContainer.innerHTML = '';
+
+            if (clinics.length === 0) {
+                clinicsSection.style.display = 'none';
+                noClinicsSection.style.display = 'block';
+                return;
+            }
+
+            clinicsSection.style.display = 'block';
+            noClinicsSection.style.display = 'none';
+
+            clinics.forEach((clinic, index) => {
+                const clinicCard = document.createElement('div');
+                clinicCard.className = 'col-md-6 col-lg-4 mb-4';
+                clinicCard.innerHTML = `
+                    <div class="card zoomIn" style="animation-delay: ${0.1 + index * 0.1}s;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 style="color: var(--primary-color); margin: 0;">${clinic.name}</h4>
+                                <div class="badge ${clinic.is_open ? 'badge-success' : 'badge-danger'}">
+                                    ${clinic.status}
+                                </div>
+                            </div>
+                            <p style="color: var(--gray-color); margin-bottom: 10px;">
+                                <i class="fas fa-map-marker-alt"></i> ${clinic.address}
+                            </p>
+                            <p style="color: var(--gray-color); margin-bottom: 10px;">
+                                <i class="fas fa-clock"></i> ${clinic.working_hours}
+                            </p>
+                            <p style="color: var(--gray-color); margin-bottom: 15px;">
+                                <i class="fas fa-phone"></i> ${clinic.phone}
+                            </p>
+                            <a href="clinic-details.html?clinic=${clinic.id}" class="btn btn-primary btn-block">
+                                <i class="fas fa-arrow-left"></i> عرض التفاصيل
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                clinicsContainer.appendChild(clinicCard);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadClinics);
+    </script>
+</body>
+
+</html>

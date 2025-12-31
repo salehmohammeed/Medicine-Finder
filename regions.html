@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأحياء - Medicine Finder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" dir="rtl">
+        <div class="container navbar-container">
+            <a href="index.html" class="navbar-brand">Medicine Finder</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="regions.html" class="nav-link">الأحياء</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="loginDropdown" aria-haspopup="true" aria-expanded="false">
+                        تسجيل الدخول
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                        <li>
+                            <a class="dropdown-item" href="pharmacist-login.html">
+                                تسجيل الدخول كصيدلي
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="manager-login.html">
+                                تسجيل الدخول كمدير
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline btn-sm">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 80px 0 60px 0; margin-bottom: 50px;">
+        <div class="container text-center fadeInUp">
+            <div style="font-size: 48px; margin-bottom: 20px;">
+                <i class="fas fa-map-marked-alt heartBeat"></i>
+            </div>
+            <h1 class="mb-3">اختر الحي</h1>
+            <p class="mb-4" style="font-size: 18px;">اختر الحي الذي تعيش فيه لعرض العيادات المجانية المتاحة</p>
+        </div>
+    </section>
+
+    <!-- Regions Grid -->
+    <section class="container mt-5 mb-5" id="regionsSection">
+        <div class="row" id="regionsContainer">
+            <!-- سيتم إنشاء الكروت ديناميكيًا -->
+        </div>
+    </section>
+
+    <!-- رسالة عند عدم وجود مناطق -->
+    <p id="noRegionsMessage" class="error-message" style="display: none; text-align:center;">
+        لا توجد مناطق متاحة
+    </p>
+
+    <!-- Search Section -->
+    <section class="container mt-5 mb-5">
+        <div class="card fadeInUp">
+            <div class="card-body text-center">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">لا تعرف الحي؟</h3>
+                <p style="margin-bottom: 20px;">يمكنك البحث عن الدواء مباشرة وسنعرض لك جميع العيادات المتاحة</p>
+                <a href="search.html" class="btn btn-success btn-lg">
+                    <i class="fas fa-search"></i> ابحث عن دواء
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-pills"></i> Medicine Finder</h3>
+                    <p>نظام يساعد المرضى في غزة على معرفة الأدوية المتوفرة مجانًا في العيادات المجانية</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-link"></i> روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="regions.html"><i class="fas fa-map-marked-alt"></i> الأحياء</a></li>
+                        <li><a href="pharmacist-login.html"><i class="fas fa-user-md"></i> الصيدلي</a></li>
+                        <li><a href="manager-login.html"><i class="fas fa-user-shield"></i> المدير</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-phone"></i> تواصل معنا</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> البريد الإلكتروني: contact@medicinefinder.com</li>
+                        <li><i class="fas fa-phone"></i> هاتف: 059-999-9999</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Medicine Finder. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load JSON Data
+        let data = null;
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load data');
+                }
+                data = await response.json();
+                console.log('Data loaded successfully');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('حدث خطأ في تحميل البيانات');
+            }
+        }
+
+        // Load Regions
+        async function loadRegions() {
+            if (!data) {
+                await loadData();
+            }
+
+            const regionsContainer = document.getElementById('regionsContainer');
+            const noRegionsMessage = document.getElementById('noRegionsMessage');
+
+            regionsContainer.innerHTML = ''; // إفراغ أي محتوى قديم
+
+            if (!data.regions || data.regions.length === 0) {
+                noRegionsMessage.style.display = 'block';
+                return;
+            } else {
+                noRegionsMessage.style.display = 'none';
+            }
+
+            data.regions.forEach((region, index) => {
+                // حساب عدد العيادات في كل حي
+                const clinicsCount = data.clinics.filter(c => c.region_id === region.id).length;
+
+                const regionCard = document.createElement('div');
+                regionCard.className = 'col-md-6 col-lg-4 mb-4';
+                regionCard.innerHTML = `
+            <div class="card zoomIn" style="animation-delay: ${0.1 + index * 0.1}s;">
+                <div class="card-body text-center">
+                    <h3 style="color: var(--primary-color); margin-bottom: 10px;">${region.name}</h3>
+                    <p style="color: var(--gray-color); margin-bottom: 15px;">${region.description}</p>
+                    <div class="badge badge-info mb-3">
+                        <i class="fas fa-hospital"></i> ${clinicsCount} ${clinicsCount === 1 ? 'عيادة' : 'عيادات'}
+                    </div>
+                    <a href="clinics.html?region=${region.id}" class="btn btn-primary btn-block">
+                        <i class="fas fa-arrow-left"></i> عرض العيادات
+                    </a>
+                </div>
+            </div>
+        `;
+
+                regionsContainer.appendChild(regionCard);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadRegions);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث عن الأدوية - Medicine Finder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="navbar-brand">Medicine Finder</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a href="regions.html" class="nav-link">الأحياء</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="loginDropdown" aria-haspopup="true" aria-expanded="false">
+                        تسجيل الدخول
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                        <li>
+                            <a class="dropdown-item" href="pharmacist-login.html">
+                                تسجيل الدخول كصيدلي
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="manager-login.html">
+                                تسجيل الدخول كمدير
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline btn-sm">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 80px 0 60px 0;">
+        <div class="container text-center fadeInUp">
+            <div style="font-size: 48px; margin-bottom: 20px;">
+                <i class="fas fa-search heartBeat"></i>
+            </div>
+            <h1 class="mb-3">ابحث عن الدواء</h1>
+            <p class="mb-4" style="font-size: 18px;">ابحث عن الدواء المطلوب وسنعرض لك جميع العيادات المتاحة</p>
+        </div>
+    </section>
+
+    <!-- Search Form -->
+    <section class="container mt-5 mb-5" style="margin-top: 50px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card fadeInUp">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="medicineSearch" class="form-label">اسم الدواء</label>
+                            <div class="input-group">
+                                <input type="text" id="medicineSearch" class="form-control"
+                                    placeholder="ابحث عن الدواء..." onkeyup="isSearchEmpty()" style="margin: 10px 0px;">
+                                <p id="searchError" class="error-message"
+                                    style=" color: #d32f2f; font-size: 0.9rem; margin-top: 6px; display: none;"></p>
+                                <button class="btn btn-primary" onclick="searchMedicine()">
+                                    <i class="fas fa-search" id="searchBtn"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <p style="color: var(--gray-color);">أو اختر الحي من <a href="regions.html">هنا</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Results -->
+    <section class="container mt-5 mb-5" id="resultsSection" style="display: none; margin-top: 50px;">
+        <h2 class="text-center mb-4 fadeInUp">نتائج البحث</h2>
+        <div id="resultsContainer" class="row">
+            <!-- Results will be inserted here -->
+        </div>
+    </section>
+
+    <!-- No Results Message -->
+    <section class="container mt-5 mb-5" id="noResultsSection" style="display: none; margin-top: 50px;">
+        <div class="card fadeInUp">
+            <div class="card-body text-center">
+                <div style="font-size: 64px; margin-bottom: 20px; color: var(--gray-color);">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 style="margin-bottom: 15px;">لا توجد نتائج</h3>
+                <p style="color: var(--gray-color); margin-bottom: 20px;">لم نتمكن من العثور على الدواء الذي تبحث عنه
+                </p>
+                <a href="regions.html" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> اختر الحي
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-pills"></i> Medicine Finder</h3>
+                    <p>نظام يساعد المرضى في غزة على معرفة الأدوية المتوفرة مجانًا في العيادات المجانية</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-link"></i> روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="regions.html"><i class="fas fa-map-marked-alt"></i> الأحياء</a></li>
+                        <li><a href="pharmacist-login.html"><i class="fas fa-user-md"></i> الصيدلي</a></li>
+                        <li><a href="manager-login.html"><i class="fas fa-user-shield"></i> المدير</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-phone"></i> تواصل معنا</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> البريد الإلكتروني: contact@medicinefinder.com</li>
+                        <li><i class="fas fa-phone"></i> هاتف: 059-999-9999</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Medicine Finder. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        let data = null;
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/data.json');
+                if (!response.ok) throw new Error('Failed to load data');
+                data = await response.json();
+                console.log('Data loaded successfully');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                alert('حدث خطأ في تحميل البيانات');
+            }
+        }
+        function isSearchEmpty() {
+            const searchInput = document.getElementById('medicineSearch');
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            const error = document.getElementById("searchError");
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultsSection = document.getElementById('resultsSection');
+            const noResultsSection = document.getElementById('noResultsSection');
+            if (searchTerm.length === 0) {
+                error.textContent = "الرجاء إدخال اسم الدواء";
+                error.style.display = "block";
+                resultsContainer.innerHTML = '';
+                resultsSection.style.display = 'none';
+                noResultsSection.style.display = 'none'; return;
+            }
+            else { error.style.display = "none"; }
+        }
+
+        async function searchMedicine() {
+            if (!data) await loadData();
+
+            const searchInput = document.getElementById('medicineSearch');
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            const error = document.getElementById("searchError");
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultsSection = document.getElementById('resultsSection');
+            const noResultsSection = document.getElementById('noResultsSection');
+
+            if (!searchTerm) {
+                error.textContent = "الرجاء إدخال اسم الدواء";
+                error.style.display = "block";
+                resultsContainer.innerHTML = '';
+                resultsSection.style.display = 'none';
+                noResultsSection.style.display = 'none';
+                return;
+            } else {
+                error.style.display = "none";
+            }
+
+            // البحث عن الأدوية المطابقة
+            const matchingMedicines = data.medicines.filter(m =>
+                m.name.toLowerCase().includes(searchTerm) ||
+                m.name_en.toLowerCase().includes(searchTerm)
+            );
+
+            // جمع جميع الـ clinic_id من المخزون
+            const clinicIds = [...new Set(
+                matchingMedicines.flatMap(m => m.clinic_stock.map(s => s.clinic_id))
+            )];
+
+            // الحصول على العيادات الفعلية
+            const clinics = clinicIds.map(id => data.clinics.find(c => c.id === id)).filter(Boolean);
+
+            displayResults(clinics, matchingMedicines);
+        }
+
+        function displayResults(clinics, medicines) {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const resultsSection = document.getElementById('resultsSection');
+            const noResultsSection = document.getElementById('noResultsSection');
+
+            resultsContainer.innerHTML = '';
+
+            if (clinics.length === 0) {
+                resultsSection.style.display = 'none';
+                noResultsSection.style.display = 'block';
+                return;
+            }
+
+            resultsSection.style.display = 'block';
+            noResultsSection.style.display = 'none';
+
+            clinics.forEach(clinic => {
+                const clinicMedicines = medicines.filter(m =>
+                    m.clinic_stock?.some(stock => stock.clinic_id === clinic.id)
+                );
+                const region = data.regions.find(r => r.id === clinic.region_id);
+
+                const clinicCard = document.createElement('div');
+                clinicCard.className = 'col-md-6 col-lg-4 mb-4';
+                clinicCard.innerHTML = `
+                <div class="card zoomIn">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 style="color: var(--primary-color); margin: 0;">${clinic.name}</h4>
+                            <div class="badge ${clinic.is_open ? 'badge-success' : 'badge-danger'}">
+                                ${clinic.status}
+                            </div>
+                        </div>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;">
+                            <i class="fas fa-map-marker-alt"></i> ${clinic.address}
+                        </p>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;">
+                            <i class="fas fa-clock"></i> ${clinic.working_hours}
+                        </p>
+                        <p style="color: var(--gray-color); margin-bottom: 15px;">
+                            <i class="fas fa-building"></i> ${region?.name || '-'}
+                        </p>
+                        <div style="background-color: var(--light-color); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <h5 style="margin-bottom: 10px;">الأدوية المتاحة (${clinicMedicines.length}):</h5>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                ${clinicMedicines.map(m => {
+                    const stock = m.clinic_stock.find(s => s.clinic_id === clinic.id);
+                    return `
+                                        <li style="margin-bottom: 5px;">
+                                            <i class="fas fa-pills" style="color: var(--primary-color);"></i>
+                                            <strong>${m.name}</strong>
+                                            <span class="badge ${stock?.is_available ? 'badge-success' : 'badge-danger'}" style="float: left;">
+                                                ${stock?.quantity || 0} قطعة
+                                            </span>
+                                        </li>
+                                    `;
+                }).join('')}
+                            </ul>
+                        </div>
+                        <a href="clinic-details.html?clinic=${clinic.id}" class="btn btn-primary btn-block">
+                            <i class="fas fa-arrow-left"></i> عرض التفاصيل
+                        </a>
+                    </div>
+                </div>
+            `;
+
+                resultsContainer.appendChild(clinicCard);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadData();
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+            if (query) {
+                document.getElementById('medicineSearch').value = query;
+                searchMedicine();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

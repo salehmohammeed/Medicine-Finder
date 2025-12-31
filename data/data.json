@@ -1,0 +1,832 @@
+{
+    "regions": [
+        {
+            "id": 1,
+            "name": "حي الشجاعية",
+            "name_en": "Al-Shuja'iyya",
+            "clinics_count": 3
+        },
+        {
+            "id": 2,
+            "name": "حي الرمال",
+            "name_en": "Al-Rimal",
+            "clinics_count": 2
+        },
+        {
+            "id": 3,
+            "name": "حي النصيرات",
+            "name_en": "Al-Nuseirat",
+            "clinics_count": 2
+        },
+        {
+            "id": 4,
+            "name": "حي تل الهوى",
+            "name_en": "Tel Al-Hawa",
+            "clinics_count": 3
+        },
+        {
+            "id": 5,
+            "name": "حي التفاح",
+            "name_en": "At-Tuffah",
+            "clinics_count": 1
+        },
+        {
+            "id": 6,
+            "name": "حي الزيتون",
+            "name_en": "Al-Zaytoun",
+            "clinics_count": 2
+        }
+    ],
+    "clinics": [
+        {
+            "id": 1,
+            "region_id": 1,
+            "name": "العيادة المجانية الشجاعية",
+            "name_en": "Al-Shuja'iyya Free Clinic",
+            "address": "شارع صلاح الدين",
+            "address_en": "Salah Al-Din Street",
+            "phone": "059-123-4567",
+            "working_hours": "8:00 ص - 4:00 م",
+            "working_hours_en": "8:00 AM - 4:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 1
+        },
+        {
+            "id": 2,
+            "region_id": 1,
+            "name": "عيادة الرحمة المجانية",
+            "name_en": "Al-Rahma Free Clinic",
+            "address": "شارع عمر المختار",
+            "address_en": "Omar Al-Mukhtar Street",
+            "phone": "059-234-5678",
+            "working_hours": "9:00 ص - 5:00 م",
+            "working_hours_en": "9:00 AM - 5:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 2
+        },
+        {
+            "id": 3,
+            "region_id": 1,
+            "name": "عيادة الأمل المجانية",
+            "name_en": "Al-Amal Free Clinic",
+            "address": "شارع الوحدة",
+            "address_en": "Al-Wahda Street",
+            "phone": "059-345-6789",
+            "working_hours": "7:00 ص - 3:00 م",
+            "working_hours_en": "7:00 AM - 3:00 PM",
+            "status": "مغلقة",
+            "status_en": "Closed",
+            "is_open": false,
+            "pharmacist_id": 3
+        },
+        {
+            "id": 4,
+            "region_id": 2,
+            "name": "العيادة المجانية الرمال",
+            "name_en": "Al-Rimal Free Clinic",
+            "address": "شارع الرمال",
+            "address_en": "Al-Rimal Street",
+            "phone": "059-456-7890",
+            "working_hours": "8:00 ص - 4:00 م",
+            "working_hours_en": "8:00 AM - 4:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 4
+        },
+        {
+            "id": 5,
+            "region_id": 2,
+            "name": "عيادة السلام المجانية",
+            "name_en": "Al-Salam Free Clinic",
+            "address": "شارع الرمال الجديدة",
+            "address_en": "Al-Rimal Al-Jadida Street",
+            "phone": "059-567-8901",
+            "working_hours": "9:00 ص - 5:00 م",
+            "working_hours_en": "9:00 AM - 5:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 5
+        },
+        {
+            "id": 6,
+            "region_id": 3,
+            "name": "العيادة المجانية النصيرات",
+            "name_en": "Al-Nuseirat Free Clinic",
+            "address": "شارع النصيرات",
+            "address_en": "Al-Nuseirat Street",
+            "phone": "059-678-9012",
+            "working_hours": "8:00 ص - 4:00 م",
+            "working_hours_en": "8:00 AM - 4:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 6
+        },
+        {
+            "id": 7,
+            "region_id": 3,
+            "name": "عيادة البركة المجانية",
+            "name_en": "Al-Baraka Free Clinic",
+            "address": "شارع النصيرات الجديدة",
+            "address_en": "Al-Nuseirat Al-Jadida Street",
+            "phone": "059-789-0123",
+            "working_hours": "9:00 ص - 5:00 م",
+            "working_hours_en": "9:00 AM - 5:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 7
+        },
+        {
+            "id": 8,
+            "region_id": 4,
+            "name": "العيادة المجانية تل الهوى",
+            "name_en": "Tel Al-Hawa Free Clinic",
+            "address": "شارع تل الهوى",
+            "address_en": "Tel Al-Hawa Street",
+            "phone": "059-890-1234",
+            "working_hours": "8:00 ص - 4:00 م",
+            "working_hours_en": "8:00 AM - 4:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 8
+        },
+        {
+            "id": 9,
+            "region_id": 4,
+            "name": "عيادة الشفاء المجانية",
+            "name_en": "Al-Shifa Free Clinic",
+            "address": "شارع تل الهوى الجديدة",
+            "address_en": "Tel Al-Hawa Al-Jadida Street",
+            "phone": "059-901-2345",
+            "working_hours": "9:00 ص - 5:00 م",
+            "working_hours_en": "9:00 AM - 5:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 9
+        },
+        {
+            "id": 10,
+            "region_id": 4,
+            "name": "عيادة الأمل تل الهوى المجانية",
+            "name_en": "Al-Amal Tel Al-Hawa Free Clinic",
+            "address": "شارع تل الهوى الوسطى",
+            "address_en": "Tel Al-Hawa Al-Wusta Street",
+            "phone": "059-012-3456",
+            "working_hours": "7:00 ص - 3:00 م",
+            "working_hours_en": "7:00 AM - 3:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 10
+        },
+        {
+            "id": 11,
+            "region_id": 5,
+            "name": "العيادة المجانية التفاح",
+            "name_en": "At-Tuffah Free Clinic",
+            "address": "شارع التفاح",
+            "address_en": "At-Tuffah Street",
+            "phone": "059-123-4567",
+            "working_hours": "8:00 ص - 4:00 م",
+            "working_hours_en": "8:00 AM - 4:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 11
+        },
+        {
+            "id": 12,
+            "region_id": 6,
+            "name": "العيادة المجانية الزيتون",
+            "name_en": "Al-Zaytoun Free Clinic",
+            "address": "شارع الزيتون",
+            "address_en": "Al-Zaytoun Street",
+            "phone": "059-234-5678",
+            "working_hours": "8:00 ص - 4:00 م",
+            "working_hours_en": "8:00 AM - 4:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 12
+        },
+        {
+            "id": 13,
+            "region_id": 6,
+            "name": "عيادة الرحمة الزيتون المجانية",
+            "name_en": "Al-Rahma Al-Zaytoun Free Clinic",
+            "address": "شارع الزيتون الجديدة",
+            "address_en": "Al-Zaytoun Al-Jadida Street",
+            "phone": "059-345-6789",
+            "working_hours": "9:00 ص - 5:00 م",
+            "working_hours_en": "9:00 AM - 5:00 PM",
+            "status": "مفتوحة",
+            "status_en": "Open",
+            "is_open": true,
+            "pharmacist_id": 13
+        }
+    ],
+    "medicines": [
+        {
+            "id": 1,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 0,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "بروفين",
+            "name_en": "Ibuprofen",
+            "quantity": 150,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مسكنات",
+            "category_en": "Painkillers",
+            "description": "مسكن للألم وخافض للحرارة",
+            "description_en": "Pain reliever and fever reducer",
+            "usage": "تناول قرصين كل 6 ساعات",
+            "usage_en": "Take 2 tablets every 6 hours",
+            "dosage": "400 مجم",
+            "dosage_en": "400 mg",
+            "side_effects": "غثيان، دوخة",
+            "side_effects_en": "Nausea, dizziness"
+        },
+        {
+            "id": 2,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 50,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 6,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "باراسيتامول",
+            "name_en": "Paracetamol",
+            "quantity": 200,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مسكنات",
+            "category_en": "Painkillers",
+            "description": "مسكن للألم وخافض للحرارة",
+            "description_en": "Pain reliever and fever reducer",
+            "usage": "تناول قرصين كل 4 ساعات",
+            "usage_en": "Take 2 tablets every 4 hours",
+            "dosage": "500 مجم",
+            "dosage_en": "500 mg",
+            "side_effects": "نادر",
+            "side_effects_en": "Rare"
+        },
+        {
+            "id": 3,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 10,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 8,
+                    "quantity": 0,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 9,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "أموكسيسيلين",
+            "name_en": "Amoxicillin",
+            "quantity": 100,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات حيوية",
+            "category_en": "Antibiotics",
+            "description": "مضاد حيوي واسع المجال",
+            "description_en": "Broad-spectrum antibiotic",
+            "usage": "تناول قرصين كل 8 ساعات",
+            "usage_en": "Take 2 tablets every 8 hours",
+            "dosage": "500 مجم",
+            "dosage_en": "500 mg",
+            "side_effects": "إسهال، غثيان",
+            "side_effects_en": "Diarrhea, nausea"
+        },
+        {
+            "id": 4,
+            "clinic_stock": [
+                {
+                    "clinic_id": 5,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 1,
+                    "quantity": 5,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 2,
+                    "quantity": 50,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "كلاريثروميسين",
+            "name_en": "Clarithromycin",
+            "quantity": 50,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات حيوية",
+            "category_en": "Antibiotics",
+            "description": "مضاد حيوي للعدوى البكتيرية",
+            "description_en": "Antibiotic for bacterial infections",
+            "usage": "تناول قرصين مرتين يومياً",
+            "usage_en": "Take 2 tablets twice daily",
+            "dosage": "500 مجم",
+            "dosage_en": "500 mg",
+            "side_effects": "غثيان، إسهال",
+            "side_effects_en": "Nausea, diarrhea"
+        },
+        {
+            "id": 5,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 50,
+                    "is_available": false,
+                    "status": " متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "أوميبرازول",
+            "name_en": "Omeprazole",
+            "quantity": 80,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات الحموضة",
+            "category_en": "Antacids",
+            "description": "علاج حرقة المعدة",
+            "description_en": "Treatment for heartburn",
+            "usage": "تناول قرص واحد صباحاً",
+            "usage_en": "Take 1 tablet in the morning",
+            "dosage": "20 مجم",
+            "dosage_en": "20 mg",
+            "side_effects": "صداع، غثيان",
+            "side_effects_en": "Headache, nausea"
+        },
+        {
+            "id": 6,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 50,
+                    "is_available": false,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "سيتريزين",
+            "name_en": "Cetirizine",
+            "quantity": 120,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات الهيستامين",
+            "category_en": "Antihistamines",
+            "description": "علاج الحساسية",
+            "description_en": "Treatment for allergies",
+            "usage": "تناول قرص واحد يومياً",
+            "usage_en": "Take 1 tablet daily",
+            "dosage": "10 مجم",
+            "dosage_en": "10 mg",
+            "side_effects": "نعاس",
+            "side_effects_en": "Drowsiness"
+        },
+        {
+            "id": 7,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "لوراتادين",
+            "name_en": "Loratadine",
+            "quantity": 90,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات الهيستامين",
+            "category_en": "Antihistamines",
+            "description": "علاج الحساسية",
+            "description_en": "Treatment for allergies",
+            "usage": "تناول قرص واحد يومياً",
+            "usage_en": "Take 1 tablet daily",
+            "dosage": "10 مجم",
+            "dosage_en": "10 mg",
+            "side_effects": "نادر",
+            "side_effects_en": "Rare"
+        },
+        {
+            "id": 8,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 0,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "أسيتيل ساليسيليك",
+            "name_en": "Acetylsalicylic Acid",
+            "quantity": 150,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مسكنات",
+            "category_en": "Painkillers",
+            "description": "مسكن للألم وخافض للحرارة",
+            "description_en": "Pain reliever and fever reducer",
+            "usage": "تناول قرصين كل 6 ساعات",
+            "usage_en": "Take 2 tablets every 6 hours",
+            "dosage": "500 مجم",
+            "dosage_en": "500 mg",
+            "side_effects": "غثيان، دوخة",
+            "side_effects_en": "Nausea, dizziness"
+        },
+        {
+            "id": 9,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 50,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 6,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 7,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "ديكلوفيناك",
+            "name_en": "Diclofenac",
+            "quantity": 100,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات الالتهاب",
+            "category_en": "Anti-inflammatory",
+            "description": "مضاد للالتهاب والألم",
+            "description_en": "Anti-inflammatory and pain reliever",
+            "usage": "تناول قرص واحد مرتين يومياً",
+            "usage_en": "Take 1 tablet twice daily",
+            "dosage": "50 مجم",
+            "dosage_en": "50 mg",
+            "side_effects": "غثيان، إسهال",
+            "side_effects_en": "Nausea, diarrhea"
+        },
+        {
+            "id": 10,
+            "clinic_stock": [
+                {
+                    "clinic_id": 1,
+                    "quantity": 150,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 3,
+                    "quantity": 80,
+                    "is_available": true,
+                    "status": "متوفر"
+                },
+                {
+                    "clinic_id": 4,
+                    "quantity": 0,
+                    "is_available": false,
+                    "status": "غير متوفر"
+                },
+                {
+                    "clinic_id": 5,
+                    "quantity": 120,
+                    "is_available": true,
+                    "status": "متوفر"
+                }
+            ],
+            "name": "أموكسيسيلين-كلافولانات",
+            "name_en": "Amoxicillin-Clavulanate",
+            "quantity": 60,
+            "status": "متوفر",
+            "status_en": "Available",
+            "is_available": true,
+            "category": "مضادات حيوية",
+            "category_en": "Antibiotics",
+            "description": "مضاد حيوي واسع المجال",
+            "description_en": "Broad-spectrum antibiotic",
+            "usage": "تناول قرصين كل 8 ساعات",
+            "usage_en": "Take 2 tablets every 8 hours",
+            "dosage": "625 مجم",
+            "dosage_en": "625 mg",
+            "side_effects": "إسهال، غثيان",
+            "side_effects_en": "Diarrhea, nausea"
+        }
+    ],
+    "pharmacists": [
+        {
+            "id": 1,
+            "clinic_id": 1,
+            "name": "د. أحمد محمد",
+            "name_en": "Dr. Ahmed Mohamed",
+            "phone": "059-123-4567",
+            "email": "ahmed.mohamed@clinic.com",
+            "username": "ahmed",
+            "password": "123456"
+        },
+        {
+            "id": 2,
+            "clinic_id": 2,
+            "name": "د. سارة علي",
+            "name_en": "Dr. Sara Ali",
+            "phone": "059-234-5678",
+            "email": "sara.ali@clinic.com",
+            "username": "sara",
+            "password": "123456"
+        },
+        {
+            "id": 3,
+            "clinic_id": 3,
+            "name": "د. محمد يوسف",
+            "name_en": "Dr. Mohamed Youssef",
+            "phone": "059-345-6789",
+            "email": "mohamed.youssef@clinic.com",
+            "username": "mohamed",
+            "password": "123456"
+        },
+        {
+            "id": 4,
+            "clinic_id": 4,
+            "name": "د. فاطمة خالد",
+            "name_en": "Dr. Fatima Khaled",
+            "phone": "059-456-7890",
+            "email": "fatima.khaled@clinic.com",
+            "username": "fatima",
+            "password": "123456"
+        },
+        {
+            "id": 5,
+            "clinic_id": 5,
+            "name": "د. ياسر محمود",
+            "name_en": "Dr. Yasser Mahmoud",
+            "phone": "059-567-8901",
+            "email": "yasser.mahmoud@clinic.com",
+            "username": "yasser",
+            "password": "123456"
+        },
+        {
+            "id": 6,
+            "clinic_id": 6,
+            "name": "د. ليلى أحمد",
+            "name_en": "Dr. Laila Ahmed",
+            "phone": "059-678-9012",
+            "email": "laila.ahmed@clinic.com",
+            "username": "laila",
+            "password": "123456"
+        },
+        {
+            "id": 7,
+            "clinic_id": 7,
+            "name": "د. عمر سعيد",
+            "name_en": "Dr. Omar Saeed",
+            "phone": "059-789-0123",
+            "email": "omar.saeed@clinic.com",
+            "username": "omar",
+            "password": "123456"
+        },
+        {
+            "id": 8,
+            "clinic_id": 8,
+            "name": "د. نورا محمد",
+            "name_en": "Dr. Nora Mohamed",
+            "phone": "059-890-1234",
+            "email": "nora.mohamed@clinic.com",
+            "username": "nora",
+            "password": "123456"
+        },
+        {
+            "id": 9,
+            "clinic_id": 9,
+            "name": "د. خالد عبد الله",
+            "name_en": "Dr. Khaled Abdullah",
+            "phone": "059-901-2345",
+            "email": "khaled.abdullah@clinic.com",
+            "username": "khaled",
+            "password": "123456"
+        },
+        {
+            "id": 10,
+            "clinic_id": 10,
+            "name": "د. سمية يوسف",
+            "name_en": "Dr. Samia Youssef",
+            "phone": "059-012-3456",
+            "email": "samia.youssef@clinic.com",
+            "username": "samia",
+            "password": "123456"
+        },
+        {
+            "id": 11,
+            "clinic_id": 11,
+            "name": "د. أحمد سعيد",
+            "name_en": "Dr. Ahmed Saeed",
+            "phone": "059-123-4567",
+            "email": "ahmed.saeed@clinic.com",
+            "username": "ahmed2",
+            "password": "123456"
+        },
+        {
+            "id": 12,
+            "clinic_id": 12,
+            "name": "د. فاطمة محمود",
+            "name_en": "Dr. Fatima Mahmoud",
+            "phone": "059-234-5678",
+            "email": "fatima.mahmoud@clinic.com",
+            "username": "fatima2",
+            "password": "123456"
+        },
+        {
+            "id": 13,
+            "clinic_id": 13,
+            "name": "د. محمد علي",
+            "name_en": "Dr. Mohamed Ali",
+            "phone": "059-345-6789",
+            "email": "mohamed.ali@clinic.com",
+            "username": "mohamed2",
+            "password": "123456"
+        }
+    ],
+    "managers": [
+        {
+            "id": 1,
+            "name": "د. عبد الباسط المسري",
+            "name_en": "Dr. Abdelbasset Al Massri",
+            "phone": "059-999-9999",
+            "email": "manager@medicinefinder.com",
+            "username": "manager",
+            "password": "123456"
+        }
+    ]
+}
