@@ -18,6 +18,7 @@ function checkAuth() {
         window.location.href = 'pharmacist-login.html';
         return;
     }
+    sessionStorage.removeItem("pharmacist");
     pharmacist = JSON.parse(pharmacistData);
 }
 

@@ -1,7 +1,9 @@
 let data = null;
+let manager = null;
 let editRegionId = null;
 let editClinicId = null;
 let editPharmacistId = null;
+
 
 async function loadData() {
     const res = await fetch("data/data.json");
@@ -12,18 +14,40 @@ async function loadData() {
     fillRegionSelects();
     fillClinicSelects();
 }
+// التحقق من تسجيل دخول المدير
+function checkAuth() {
+    const managerData = sessionStorage.getItem('manager');
+    if (!managerData) {
+        window.location.href = 'manager-login.html';
+        return;
+    }
+    // sessionStorage.removeItem("manager");
+    manager = JSON.parse(managerData);
+}
 
 // --- Regions ---
 function renderRegions() {
     const list = document.getElementById("regionsList");
     list.innerHTML = "";
     data.regions.forEach((r, i) => {
+        const regionClinics = data.clinics.filter(c => c.region_id === r.id);
+
+        const clinicsHTML = regionClinics.map(c => `
+            <div class="clinic-item">
+                ${c.name}
+                <span class="${c.is_open ? 'text-success' : 'text-danger'}">
+                    (${c.status})
+                </span>
+            </div>
+        `).join("");
+
         const clinicsCount = data.clinics.filter(c => c.region_id === r.id).length;
         list.innerHTML += `
             <tr>
                 <td>${i + 1}</td>
                 <td>${r.name}</td>
-                <td>${clinicsCount}</td>
+                <td>${clinicsCount || 'اضافة جديدة'}</td>
+                <td>${clinicsHTML || 'لا توجد عيادات'}</td>
                 <td>
                     <button class="btn btn-warning btn-sm" onclick="openEditRegion(${r.id})">تعديل</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteRegion(${r.id})">حذف</button>
@@ -31,6 +55,7 @@ function renderRegions() {
             </tr>
         `;
     });
+
 }
 
 function deleteRegion(id) {
@@ -41,15 +66,20 @@ function deleteRegion(id) {
 }
 
 document.getElementById("addRegionForm").addEventListener("submit", e => {
+
     e.preventDefault();
     data.regions.push({
-        id: Date.now(),
+        id: data.regions.length + 1,
         name: regionName.value,
-        name_en: regionNameEn.value
+        name_en: regionNameEn.value,
+        clinics_count: clinicCount.value
     });
     renderRegions();
     fillRegionSelects();
     bootstrap.Modal.getInstance(addRegionModal).hide();
+    regionName.value = "";
+    regionNameEn.value = "";
+    clinicCount.value = "";
 });
 
 function openEditRegion(id) {
@@ -76,11 +106,14 @@ function renderClinics() {
     list.innerHTML = "";
     data.clinics.forEach((c, i) => {
         const region = data.regions.find(r => r.id === c.region_id);
+        const pharmacistClinic = data.pharmacists.find(r => r.id === c.pharmacist_id)
+        console.log(c)
         list.innerHTML += `
         <tr>
             <td>${i + 1}</td>
             <td>${c.name}</td>
             <td>${region ? region.name : ""}</td>
+            <td>${pharmacistClinic ? pharmacistClinic.name : ""}</td>
             <td>${c.phone}</td>
             <td>
                 <button class="btn btn-warning btn-sm" onclick="openEditClinic(${c.id})">تعديل</button>
@@ -98,16 +131,38 @@ function deleteClinic(id) {
 
 document.getElementById("addClinicForm").addEventListener("submit", e => {
     e.preventDefault();
-    data.clinics.push({
-        id: Date.now(),
+
+    const newClinic = {
+        id: data.clinics.length + 1, // id = عدد العيادات + 1
+        region_id: Number(clinicRegion.value), // id المنطقة المختارة
         name: clinicName.value,
-        region_id: parseInt(clinicRegion.value),
-        phone: clinicPhone.value
-    });
+        name_en: clinicNameEn.value,
+        address: clinicAddress.value,
+        address_en: clinicAddressEn.value,
+        phone: clinicPhone.value,
+        working_hours: clinicHours.value,
+        working_hours_en: clinicHoursEn.value,
+        is_open: clinicStatus.value === "true",
+        status: clinicStatus.value === "true" ? "مفتوحة" : "مغلقة",
+        status_en: clinicStatus.value === "true" ? "Open" : "Closed",
+        pharmacist_id: clinicPharmacist.value
+            ? Number(clinicPharmacist.value)
+            : null
+    };
+
+    data.clinics.push(newClinic);
+    // إعادة العرض
     renderClinics();
+    renderRegions();
     fillClinicSelects();
+
+    // إغلاق المودال
     bootstrap.Modal.getInstance(addClinicModal).hide();
+
+    // تصفير الفورم
+    e.target.reset();
 });
+
 
 function openEditClinic(id) {
     editClinicId = id;
@@ -214,4 +269,13 @@ function fillClinicSelects() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", loadData);
+document.addEventListener("DOMContentLoaded", async () => {
+    checkAuth();
+    loadData();
+})
+
+// تسجيل الخروج
+function logout() {
+    sessionStorage.removeItem('manager');
+    window.location.href = 'manager-login.html';
+}

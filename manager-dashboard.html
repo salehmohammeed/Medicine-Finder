@@ -5,13 +5,17 @@
     <meta charset="UTF-8">
     <title>لوحة تحكم المدير</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-dark bg-dark px-3">
+    <nav class="navbar navbar-dark px-3 d-flex">
         <span class="navbar-brand">لوحة تحكم المدير</span>
-        <button class="btn btn-danger btn-sm">تسجيل خروج</button>
+        <button class="btn  btn-outline-danger btn-sm logout-btn w-20" onclick="logout()" style="color: white;">
+            تسجيل خروج
+        </button>
+
     </nav>
 
     <div class="container mt-4">
@@ -31,6 +35,7 @@
                         <th>#</th>
                         <th>اسم المنطقة</th>
                         <th>عدد العيادات</th>
+                        <th>العيادات</th>
                         <th>إجراءات</th>
                     </tr>
                 </thead>
@@ -53,6 +58,7 @@
                         <th>#</th>
                         <th>اسم العيادة</th>
                         <th>المنطقة</th>
+                        <th>الصيدلاني </th>
                         <th>الهاتف</th>
                         <th>إجراءات</th>
                     </tr>
@@ -91,7 +97,7 @@
 
     <!-- إضافة منطقة -->
     <div class="modal fade" id="addRegionModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="addRegionForm">
                     <div class="modal-header">
@@ -100,7 +106,8 @@
                     </div>
                     <div class="modal-body">
                         <input id="regionName" class="form-control mb-2" placeholder="اسم المنطقة" required>
-                        <input id="regionNameEn" class="form-control" placeholder="Region name (EN)" required>
+                        <input id="regionNameEn" class="form-control mb-2" placeholder="Region name (EN)" required>
+                        <input id="clinicCount" class="form-control" placeholder="عدد العيادات" type="number" required>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary w-100">حفظ</button>
@@ -112,7 +119,7 @@
 
     <!-- تعديل منطقة -->
     <div class="modal fade" id="editRegionModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="editRegionForm">
                     <div class="modal-header">
@@ -132,30 +139,72 @@
     </div>
 
     <!-- إضافة عيادة -->
-    <div class="modal fade" id="addClinicModal">
-        <div class="modal-dialog">
+    <div class="modal fade" id="addClinicModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
             <div class="modal-content">
+
                 <form id="addClinicForm">
+
                     <div class="modal-header">
-                        <h5>إضافة عيادة</h5>
+                        <h5 class="modal-title">إضافة عيادة</h5>
                         <button class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+
                     <div class="modal-body">
-                        <input id="clinicName" class="form-control mb-2" placeholder="اسم العيادة" required>
-                        <select id="clinicRegion" class="form-control mb-2" required></select>
-                        <input id="clinicPhone" class="form-control" placeholder="الهاتف" required>
+
+                        <!-- اسم العيادة عربي -->
+                        <input id="clinicName" class="form-control mb-2" placeholder="اسم العيادة (عربي)" required>
+
+                        <!-- اسم العيادة إنجليزي -->
+                        <input id="clinicNameEn" class="form-control mb-2" placeholder="Clinic Name (English)" required>
+
+                        <!-- المنطقة -->
+                        <select id="clinicRegion" class="form-select mb-2" required></select>
+
+                        <!-- العنوان عربي -->
+                        <input id="clinicAddress" class="form-control mb-2" placeholder="العنوان (عربي)" required>
+
+                        <!-- العنوان إنجليزي -->
+                        <input id="clinicAddressEn" class="form-control mb-2" placeholder="Address (English)" required>
+
+                        <!-- الهاتف -->
+                        <input id="clinicPhone" class="form-control mb-2" placeholder="الهاتف" required>
+
+                        <!-- ساعات العمل عربي -->
+                        <input id="clinicHours" class="form-control mb-2" placeholder="9:00 ص - 5:00 م" ساعات العمل
+                            (عربي)" required>
+
+                        <!-- ساعات العمل إنجليزي -->
+                        <input id="clinicHoursEn" class="form-control mb-2"
+                            placeholder="Working Hours (English) '9:00 Am - 5:00 Pm'" required>
+
+                        <!-- حالة العيادة -->
+                        <select id="clinicStatus" class="form-select mb-2">
+                            <option value="true">مفتوحة</option>
+                            <option value="false">مغلقة</option>
+                        </select>
+
+                        <!-- الصيدلي -->
+                        <input id="clinicPharmacist" type="number" class="form-control" placeholder="رقم الصيدلي">
+
                     </div>
+
                     <div class="modal-footer">
-                        <button class="btn btn-primary w-100">حفظ</button>
+                        <button class="btn btn-primary w-100">
+                            حفظ
+                        </button>
                     </div>
+
                 </form>
+
             </div>
         </div>
     </div>
 
+
     <!-- تعديل عيادة -->
     <div class="modal fade" id="editClinicModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="editClinicForm">
                     <div class="modal-header">
@@ -177,7 +226,7 @@
 
     <!-- إضافة صيدلي -->
     <div class="modal fade" id="addPharmacistModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="addPharmacistForm">
                     <div class="modal-header">
@@ -202,7 +251,7 @@
 
     <!-- تعديل صيدلي -->
     <div class="modal fade" id="editPharmacistModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form id="editPharmacistForm">
                     <div class="modal-header">
