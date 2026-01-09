@@ -49,9 +49,9 @@ function renderRegions() {
                 <td>${clinicsCount || 'اضافة جديدة'}</td>
                 <td>${clinicsHTML || 'لا توجد عيادات'}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" onclick="openEditRegion(${r.id})">تعديل</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteRegion(${r.id})">حذف</button>
-                </td>
+                <button class="btn btn-sm btn-warning" onclick="openEditRegion(${r.id})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="deleteRegion(${r.id})"><i class="fas fa-trash"></i></button>
+                </td?
             </tr>
         `;
     });
@@ -72,14 +72,11 @@ document.getElementById("addRegionForm").addEventListener("submit", e => {
         id: data.regions.length + 1,
         name: regionName.value,
         name_en: regionNameEn.value,
-        clinics_count: clinicCount.value
     });
     renderRegions();
     fillRegionSelects();
     bootstrap.Modal.getInstance(addRegionModal).hide();
-    regionName.value = "";
-    regionNameEn.value = "";
-    clinicCount.value = "";
+    e.target.reset()
 });
 
 function openEditRegion(id) {
@@ -106,18 +103,17 @@ function renderClinics() {
     list.innerHTML = "";
     data.clinics.forEach((c, i) => {
         const region = data.regions.find(r => r.id === c.region_id);
-        const pharmacistClinic = data.pharmacists.find(r => r.id === c.pharmacist_id)
-        console.log(c)
+        const pharmacistClinic = data.pharmacists.find(p => p.clinic_id === c.id);
         list.innerHTML += `
         <tr>
             <td>${i + 1}</td>
             <td>${c.name}</td>
             <td>${region ? region.name : ""}</td>
-            <td>${pharmacistClinic ? pharmacistClinic.name : ""}</td>
+            <td>${pharmacistClinic ? pharmacistClinic.name : "لا يوجد صيدلاني"}</td>
             <td>${c.phone}</td>
             <td>
-                <button class="btn btn-warning btn-sm" onclick="openEditClinic(${c.id})">تعديل</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteClinic(${c.id})">حذف</button>
+                <button class="btn btn-sm btn-warning" onclick="openEditClinic(${c.id})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="deleteClinic(${c.id})"><i class="fas fa-trash"></i></button>
             </td>
         </tr>`;
     });
@@ -125,7 +121,9 @@ function renderClinics() {
 
 function deleteClinic(id) {
     data.clinics = data.clinics.filter(c => c.id !== id);
+    renderRegions()
     renderClinics();
+    renderPharmacists()
     fillClinicSelects();
 }
 
@@ -145,9 +143,6 @@ document.getElementById("addClinicForm").addEventListener("submit", e => {
         is_open: clinicStatus.value === "true",
         status: clinicStatus.value === "true" ? "مفتوحة" : "مغلقة",
         status_en: clinicStatus.value === "true" ? "Open" : "Closed",
-        pharmacist_id: clinicPharmacist.value
-            ? Number(clinicPharmacist.value)
-            : null
     };
 
     data.clinics.push(newClinic);
@@ -194,12 +189,14 @@ function renderPharmacists() {
         <tr>
             <td>${i + 1}</td>
             <td>${p.name}</td>
-            <td>${clinic ? clinic.name : ""}</td>
+            <td>${clinic ? clinic.name : "العيادة غير محددة"}</td>
             <td>${p.phone}</td>
             <td>${p.email}</td>
+            <td>${p.username}</td>
+            <td>${p.password}</td>
             <td>
-                <button class="btn btn-warning btn-sm" onclick="openEditPharmacist(${p.id})">تعديل</button>
-                <button class="btn btn-danger btn-sm" onclick="deletePharmacist(${p.id})">حذف</button>
+                <button class="btn btn-sm btn-warning" onclick="openEditPharmacist(${p.id})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="deletePharmacist(${p.id})"><i class="fas fa-trash"></i></button>
             </td>
         </tr>`;
     });
@@ -208,34 +205,122 @@ function renderPharmacists() {
 function deletePharmacist(id) {
     data.pharmacists = data.pharmacists.filter(p => p.id !== id);
     renderPharmacists();
+    renderClinics();
+
+}
+function fillPharmacistClinicSelect() {
+    const select = document.getElementById("pharmacistClinic");
+    select.innerHTML = ""; // مسح القديم
+
+    // فلتر العيادات التي لا يوجد فيها صيدلي
+    const clinicsWithoutPharmacist = data.clinics.filter(clinic => {
+        // تحويل كلا الجانبين إلى number للتأكد
+        return !data.pharmacists.some(p => Number(p.clinic_id) === Number(clinic.id));
+    });
+
+    if (clinicsWithoutPharmacist.length > 0) {
+        // إضافة العيادات المتاحة
+        clinicsWithoutPharmacist.forEach(clinic => {
+            const option = document.createElement("option");
+            option.value = clinic.id;
+            option.textContent = clinic.name;
+            select.appendChild(option);
+        });
+        select.disabled = false; // تفعيل الاختيار
+    } else {
+        // إذا كل العيادات مشغولة
+        const option = document.createElement("option");
+        option.textContent = "لا يوجد عيادات بدون صيدلي";
+        option.value = "";
+        option.disabled = true;
+        option.selected = true;
+        select.appendChild(option);
+        select.disabled = true; // منع الاختيار
+    }
 }
 
+// تحديث الـ select قبل فتح المودال
+const addPharmacistModalEl = document.getElementById("addPharmacistModal");
+addPharmacistModalEl.addEventListener("show.bs.modal", fillPharmacistClinicSelect);
 document.getElementById("addPharmacistForm").addEventListener("submit", e => {
     e.preventDefault();
+    // إذا كل العيادات ممتلئة، لا نفعل شيء
+    if (!pharmacistClinic.value) return;
+    // إيجاد أعلى ID موجود
+    const lastId = data.pharmacists.length > 0
+        ? Math.max(...data.pharmacists.map(p => p.id))
+        : 0;
+
     data.pharmacists.push({
-        id: Date.now(),
+        id: lastId + 1, // ID جديد = أعلى ID + 1
         name: pharmacistName.value,
+        name_en: pharmacistNameEn.value,
         phone: pharmacistPhone.value,
         email: pharmacistEmail.value,
         username: pharmacistUsername.value,
         password: pharmacistPassword.value,
         clinic_id: parseInt(pharmacistClinic.value)
     });
+    renderClinics();
     renderPharmacists();
+    fillPharmacistClinicSelect(); // تحديث الاختيارات بعد الإضافة
     bootstrap.Modal.getInstance(addPharmacistModal).hide();
+    e.target.reset();
 });
+
+function fillEditPharmacistClinicSelect(pharmacistId) {
+    const select = document.getElementById("editPharmacistClinic");
+    select.innerHTML = "";
+
+    const currentPharmacist = data.pharmacists.find(p => p.id === pharmacistId);
+
+    // العيادات المتاحة (فارغة أو العيادة الحالية)
+    const availableClinics = data.clinics.filter(clinic =>
+        !data.pharmacists.some(p =>
+            p.clinic_id === clinic.id && p.id !== pharmacistId
+        )
+    );
+
+    if (availableClinics.length > 0) {
+        availableClinics.forEach(clinic => {
+            const option = document.createElement("option");
+            option.value = clinic.id;
+            option.textContent = clinic.name;
+
+            if (clinic.id === currentPharmacist.clinic_id) {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+        });
+
+        select.disabled = false;
+    } else {
+        const option = document.createElement("option");
+        option.textContent = "لا يوجد عيادات أخرى بدون صيدلي";
+        option.disabled = true;
+        option.selected = true;
+        select.appendChild(option);
+        select.disabled = true;
+    }
+}
 
 function openEditPharmacist(id) {
     editPharmacistId = id;
     const p = data.pharmacists.find(p => p.id === id);
+
     editPharmacistName.value = p.name;
     editPharmacistPhone.value = p.phone;
     editPharmacistEmail.value = p.email;
     editPharmacistUsername.value = p.username;
     editPharmacistPassword.value = p.password;
-    editPharmacistClinic.value = p.clinic_id;
+
+
+    fillEditPharmacistClinicSelect(id);
     bootstrap.Modal.getOrCreateInstance(editPharmacistModal).show();
+
 }
+
 
 document.getElementById("editPharmacistForm").addEventListener("submit", e => {
     e.preventDefault();
@@ -246,8 +331,11 @@ document.getElementById("editPharmacistForm").addEventListener("submit", e => {
     p.username = editPharmacistUsername.value;
     p.password = editPharmacistPassword.value;
     p.clinic_id = parseInt(editPharmacistClinic.value);
+    renderClinics();
+    renderPharmacists();
     renderPharmacists();
     bootstrap.Modal.getInstance(editPharmacistModal).hide();
+    e.target.reset();
 });
 
 // --- Fill selects ---
