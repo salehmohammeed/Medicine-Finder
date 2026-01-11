@@ -1279,3 +1279,18 @@ tr {
         padding: 10px !important;
     }
 }
+
+.search-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    /* توسيط أفقي */
+    align-items: center;
+    /* توسيط عمودي (اختياري) */
+    margin-bottom: 30px;
+}
+
+.search-btn {
+    width: 80%;
+
+    text-align: center;
+}
