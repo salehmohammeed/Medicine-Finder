@@ -104,12 +104,12 @@
 
     <!-- Medicines List -->
     <section class="container mt-5 mb-5">
-        <div class="search-btn-wrapper">
-            <a href="search.html" class="btn btn-success btn-lg search-btn">
-                <i class="fas fa-search"></i> ابحث عن دواء
-            </a>
+        <!-- Search -->
+        <div class="mb-3">
+            <input type="text" id="medicineSearch" class="form-control" placeholder="ابحث عن دواء"
+                oninput="searchClinicMedicines()">
+            <small id="searchError" class="text-danger" style="display:none"></small>
         </div>
-
         <h2 class="text-center mb-4 fadeInUp">الأدوية المتوفرة</h2>
         <div class="row">
             <div class="col-md-12">
@@ -187,24 +187,20 @@
     <script src="js/main.js"></script>
     <script>
         let data = null;
+        let clinicId = null;
+        let clinicMedicines = [];
 
         async function loadData() {
-            try {
-                const response = await fetch('data/data.json');
-                if (!response.ok) throw new Error('Failed to load data');
-                data = await response.json();
-                console.log('Data loaded successfully');
-            } catch (error) {
-                console.error('Error loading data:', error);
-                alert('حدث خطأ في تحميل البيانات');
-            }
+            const response = await fetch('data/data.json');
+            if (!response.ok) throw new Error('Failed to load data');
+            data = await response.json();
         }
 
         async function loadClinicDetails() {
-            if (!data) await loadData();
+            await loadData();
 
             const urlParams = new URLSearchParams(window.location.search);
-            const clinicId = parseInt(urlParams.get('clinic'));
+            clinicId = Number(urlParams.get('clinic'));
 
             if (!clinicId) {
                 alert('الرجاء اختيار عيادة');
@@ -221,55 +217,82 @@
 
             const region = data.regions.find(r => r.id === clinic.region_id);
 
-            // تصفية الأدوية بناءً على clinic_stock
-            const medicines = data.medicines.filter(m =>
-                Array.isArray(m.clinic_stock) && m.clinic_stock.some(s => s.clinic_id === clinicId)
+            clinicMedicines = data.medicines.filter(m =>
+                Array.isArray(m.clinic_stock) &&
+                m.clinic_stock.some(s => s.clinic_id === clinicId)
             );
 
-            displayClinicDetails(clinic, region, medicines, clinicId);
+            displayClinicDetails(clinic, region);
+            renderMedicines(clinicMedicines);
         }
 
-        function displayClinicDetails(clinic, region, medicines, clinicId) {
+        function displayClinicDetails(clinic, region) {
             document.getElementById('clinicName').textContent = clinic.name;
             document.getElementById('clinicAddress').textContent = clinic.address;
             document.getElementById('clinicPhone').textContent = clinic.phone;
             document.getElementById('clinicHours').textContent = clinic.working_hours;
             document.getElementById('clinicStatus').textContent = clinic.is_open ? 'مفتوحة' : 'مغلقة';
-            document.getElementById('clinicRegion').textContent = region.name;
+            document.getElementById('clinicRegion').textContent = region?.name || '-';
+        }
 
-            const medicinesList = document.getElementById('medicinesList');
-            medicinesList.innerHTML = '';
+        function renderMedicines(medicines) {
+            const tableBody = document.getElementById('medicinesList');
+            tableBody.innerHTML = '';
 
             if (medicines.length === 0) {
-                document.getElementById('medicinesTable').style.display = 'none';
-                document.getElementById('noMedicinesSection').style.display = 'block';
+                tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5">لا توجد أدوية</td>
+                </tr>
+            `;
                 return;
             }
-
-            document.getElementById('medicinesTable').style.display = 'block';
-            document.getElementById('noMedicinesSection').style.display = 'none';
 
             medicines.forEach((medicine, index) => {
                 const stock = medicine.clinic_stock.find(s => s.clinic_id === clinicId);
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${medicine.name}</td>
-                <td>${medicine.category}</td>
-                <td>${stock ? stock.quantity : 0}</td>
-                <td>
-                    <span class="badge ${stock && stock.is_available ? 'badge-success' : 'badge-danger'}">
-                        ${stock ? stock.status : 'غير متوفر'}
-                    </span>
-                </td>
+                tableBody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${medicine.name}</td>
+                    <td>${medicine.category}</td>
+                    <td>${stock.quantity}</td>
+                    <td>
+                        <span class="badge ${stock.is_available ? 'badge-success' : 'badge-danger'}">
+                            ${stock.is_available ? 'متوفر' : 'غير متوفر'}
+                        </span>
+                    </td>
+                </tr>
             `;
-                medicinesList.appendChild(row);
             });
         }
 
+        function searchClinicMedicines() {
+            const input = document.getElementById('medicineSearch');
+            const searchTerm = input.value.trim().toLowerCase();
+            const errorEl = document.getElementById('searchError');
+
+            // لو عنصر الخطأ غير موجود، نتجاهله بدون كسر الكود
+            if (errorEl) errorEl.style.display = 'none';
+
+            // عند تفريغ الحقل → عرض كل الأدوية
+            if (!searchTerm) {
+                renderMedicines(clinicMedicines);
+                return;
+            }
+
+            const filtered = clinicMedicines.filter(m =>
+                m.name.toLowerCase().includes(searchTerm) ||
+                m.name_en.toLowerCase().includes(searchTerm)
+            );
+
+            renderMedicines(filtered);
+        }
+
+
         document.addEventListener('DOMContentLoaded', loadClinicDetails);
     </script>
+
 
 
 </body>

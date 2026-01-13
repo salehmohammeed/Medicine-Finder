@@ -65,7 +65,7 @@
 
     <!-- Clinics Grid -->
     <section class="container mt-5 mb-5" id="clinicsSection">
-        <div class="row">
+        <div class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 30px;">
             <!-- Clinics will be inserted here -->
         </div>
     </section>
@@ -188,7 +188,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 style="color: var(--primary-color); margin: 0;">${clinic.name}</h4>
-                                <div class="badge ${clinic.is_open ? 'badge-success' : 'badge-danger'}">
+                                <div class="badge ${clinic.is_open ? 'badge-success' : 'badge-danger'}" style = "margin-top :10px;">
                                     ${clinic.status}
                                 </div>
                             </div>
